@@ -6,12 +6,9 @@ l= []
 st.sidebar.title("WhatsApp chat analyser")
 uploaded_file = st.sidebar.file_uploader("Choose a WhatApp export chat file without attechment of media")
 if uploaded_file is not None:
-    def help():
-        option = st.sidebar.selectbox("What device you used",('iPhone','Android'))   
-        return option
     bytes_data = uploaded_file.getvalue()
     file = uploaded_file.getvalue().decode("utf-8")
-    df = preprocess.pre(file)
+    df,opt = preprocess.pre(file)
     user_list = df['user'].unique().tolist()
     # if option == 'iPhone':
     # user_list.remove('group notification')
@@ -83,7 +80,7 @@ if uploaded_file is not None:
             with col2:
                 st.dataframe(y)
         st.title("Word cloud")
-        op= helper.word_cloud(select,df)
+        op,h= helper.word_cloud(select,df)
         fig,ax = plt.subplots()
         plt.imshow(op)
         st.pyplot(fig)
