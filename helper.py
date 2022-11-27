@@ -3,8 +3,7 @@ from collections import Counter
 from wordcloud import WordCloud
 import pandas as pd
 import emoji as em
-import app
-op = app.help()
+
 extractor = URLExtract()
 def stat(select,df):
     if select != 'Overall':
@@ -33,23 +32,28 @@ def busy(df):
     return name,value,y
 
 def word_cloud(select,df):
+    f = open('word.txt','r').read()
     if select != 'Overall':
         df = df[df['user'] == select]
-    
-    wc = WordCloud(width=800,height=800,min_font_size=12,background_color='white')
+    l= []
+    f = open('word.txt','r')
+    stop_word = f.read()
+    for m in df['message']:
+        for w in m.lower().split():
+            if w not in stop_word:
+                l.append(w)
+    wc = WordCloud(width=800,height=800,min_font_size=12,background_color='white',stopwords=stop_word)
     op = wc.generate(df['message'].str.cat(sep = " "))
-    return op
+    h=l
+    return op,h
 
 def perticular(select,df):
     if select != 'Overall':
         df= df[df['user']==select]
     
     temp = df[df['user'] != 'group notification']
-
-    if op == 'iPhone':
-        temp = temp[temp['message'] != '\u200eimage omitted\n']
-    else:
-        temp = temp[temp['message'] != '<Media omitted>\n']
+    temp = temp[temp['message'] != '\u200eimage omitted\n']
+    temp = temp[temp['message'] != '<Media omitted>\n']
     temp = temp[temp['message'] != '\u200esticker omitted\n']
     temp = temp[temp['message'] != '\u200eaudio omitted\n']
     l= []
