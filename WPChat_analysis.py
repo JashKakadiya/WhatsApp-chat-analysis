@@ -1,5 +1,3 @@
-from email.policy import default
-from tkinter import Button
 from turtle import color
 import streamlit as st
 import preprocess,helper
@@ -23,8 +21,8 @@ if uploaded_file is not None:
     user_list.insert(0,'Overall')
     # st.write(user_list)
     select = st.sidebar.selectbox("show analysis wrt ",user_list)    
-    bu = st.sidebar.button('Show analysis')
-    if bu:
+#     bu = st.sidebar.button('Show analysis')
+    if st.sidebar.button("Show Analysis"):
         num_m,num_w,num_media,lenght_link = helper.stat(select,df)
         col1,col2,col3,col4 = st.columns(4)
         with col1:
