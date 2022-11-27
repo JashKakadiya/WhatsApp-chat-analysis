@@ -1,9 +1,9 @@
 import re
 import pandas as pd
-from app import help
+import streamlit as st
 
 def pre(data):
-    option = help()
+    option= st.sidebar.selectbox("What device you used",('iPhone','Android'))
     if option == 'iPhone':
         p = "\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}:\d{2}\s\w[A-Z]\]"
         message = re.split(p, data)[1:]
@@ -48,4 +48,4 @@ def pre(data):
     for h in df[['hour','day_name']]['hour']:
         hour.append(str(h%13)+'-'+str((h+1)%13))
     df['new_h'] = hour
-    return df
+    return df,option
