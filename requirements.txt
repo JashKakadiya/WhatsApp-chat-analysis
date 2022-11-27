@@ -5,3 +5,9 @@ urlextract
 wordcloud
 pandas
 emoji
+tkinter
+email.policy
+default
+Button
+collections
+optparse
