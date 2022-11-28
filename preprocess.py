@@ -31,7 +31,7 @@ def pre(data):
             for i in df['date_o']:
                 formate.append(i[:-6])
             df['date'] = formate
-            df['date']=pd.to_datetime(df['date'],format="%d/%m/%y, %H:%M")
+            df['date']=pd.to_datetime(df['date'],format="%d/%m/%y, %I:%M")
         else:
             formate = []
             for i in df['date_o']:
