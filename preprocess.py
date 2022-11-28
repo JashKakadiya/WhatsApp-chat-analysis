@@ -29,9 +29,9 @@ def pre(data):
         if option2 == '24 hour formate':
             formate = []
             for i in df['date_o']:
-                formate.append(i[:-3])
+                formate.append(i[:-6])
             df['date'] = formate
-            df['date']=pd.to_datetime(df['date'],format="%d/%m/%y, %I:%M")
+            df['date']=pd.to_datetime(df['date'],format="%d/%m/%y, %H:%M")
         else:
             formate = []
             for i in df['date_o']:
