@@ -98,7 +98,7 @@ if uploaded_file is not None:
             st.dataframe(r)
         with col2:
             fig,ax = plt.subplots()
-            ax.pie(r[1].head(5),labels=r[0].head(5),autopct="0.2f")
+            ax.pie(r[1].head(5),labels=r[0].head(5),autopct="%0.2f")
             st.pyplot(fig)
 
         table = helper.heat(select,df)
