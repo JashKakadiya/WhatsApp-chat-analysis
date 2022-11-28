@@ -4,24 +4,41 @@ import streamlit as st
 
 def pre(data):
     option= st.sidebar.selectbox("What device you used",('iPhone','Android'))
+    option2=st.sidebar.radio("Select your device time formate",('12 hour formate','24 hour formate'))
     if option == 'iPhone':
-        p = "\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}:\d{2}\s\w[A-Z]\]"
+        if option2 == '12 hour formate':
+            p = "\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}:\d{2}\s\w[A-Z]\]"
+        else:
+            p = "\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}:\d{2}\s\]"
         message = re.split(p, data)[1:]
         time = re.findall(p,data)
         df= pd.DataFrame({'user_message':message, 'time':time})
-        df['time'] = pd.to_datetime(df['time'],format="[%d/%m/%y, %H:%M:%S %p]") 
+        if option2 == '24 hour formate':
+            df['time'] = pd.to_datetime(df['time'],format="[%d/%m/%y, %H:%M:%S %p]")
+        else:
+            df['time'] = pd.to_datetime(df['time'],format="[%d/%m/%y, %I:%M:%S %p]") 
         df.rename(columns= {'time':'date'},inplace = True)
-    else: 
-        p = "\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s\w[a-zA-Z]\s-\s"
+    else:
+        if option2 == '12 hour formate':
+            p = "\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s\w[a-zA-Z]\s-\s"
+        else:
+            p = "\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s"
         message = re.split(p, data)[1:]
         time = re.findall(p,data)
         df = pd.DataFrame({'user_message':message, 'date_o':time})
-        formate = []
-        for i in df['date_o']:
-            formate.append(i[:-6])
-        df['date'] = formate
-        df['date'] =pd.to_datetime(df['date'],format="%d/%m/%y, %I:%M")
-    
+        if option2 == '24 hour formate':
+            formate = []
+            for i in df['date_o']:
+                formate.append(i[:-3])
+            df['date'] = formate
+            df['date']=pd.to_datetime(df['date'],format="%d/%m/%y, %I:%M")
+        else:
+            formate = []
+            for i in df['date_o']:
+                formate.append(i[:-6])
+            df['date'] = formate
+            df['date'] =pd.to_datetime(df['date'],format="%d/%m/%y, %I:%M")
+     
 
     user=[]
     m = []
@@ -46,6 +63,9 @@ def pre(data):
     df['day_name']= df['date'].dt.day_name()
     hour = []
     for h in df[['hour','day_name']]['hour']:
-        hour.append(str(h%13)+'-'+str((h+1)%13))
+        if option2 == '24 hour formate':
+            hour.append(str(h%24)+'-'+str((h+1)%24))
+        else:
+            hour.append(str(h%12)+'-'+str((h+1)%12))
     df['new_h'] = hour
     return df,option
