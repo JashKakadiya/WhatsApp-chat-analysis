@@ -3,6 +3,7 @@ import preprocess,helper
 import matplotlib.pyplot as plt
 import seaborn as sns
 l= []
+st.title("Open sidebar")
 st.sidebar.title("WhatsApp chat analyser")
 uploaded_file = st.sidebar.file_uploader("Choose a WhatApp export chat file without attechment of media")
 if uploaded_file is not None:
