@@ -25,7 +25,7 @@ WhatsApp Chat Analyzer is an analyzing tool for WhatsApp chats. It allows users 
 
 ## Demo
 
-Check out the live demo [here](https://whatsapp-chat-analysis-yi5y.onrender.com).
+Check out the live demo [here](https://whatsapp-chat-analysis-v1-1.streamlit.app/).
 
 ## Installation
 
