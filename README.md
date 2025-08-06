@@ -18,6 +18,8 @@ WhatsApp Chat Analyzer is an analyzing tool for WhatsApp chats. It allows users 
 - Flask
 - Streamlit
 
+  
+
 ## Usage
 
 1. Export your WhatsApp chat file from the app.
